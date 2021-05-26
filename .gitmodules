@@ -1,3 +1,6 @@
 [submodule "client"]
 	path = client
 	url = https://github.com/simoneromano96/odysseus-identity-manager-client.git
+[submodule "server"]
+	path = server
+	url = https://github.com/simoneromano96/odysseus-identity-manager-server.git
