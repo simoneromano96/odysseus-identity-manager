@@ -1,0 +1,87 @@
+version: '3'
+
+services:
+  # HYDRA
+  hydra-migrate:
+    image: oryd/hydra
+    environment:
+      - DSN=cockroach://root@cockroachd:26257/defaultdb?sslmode=disable&max_conns=20&max_idle_conns=4
+    command:
+      migrate sql -e --yes
+    restart: on-failure
+
+  hydra:
+    image: oryd/hydra
+    ports:
+      - "4444:4444" # Public port
+      - "4445:4445" # Admin port (should be protected behind a proxy)
+      - "5555:5555" # Port for hydra token user
+    command:
+      serve all --dangerous-force-http
+    restart: unless-stopped
+    depends_on:
+      - hydra-migrate
+    environment:
+      - URLS_SELF_ISSUER=http://127.0.0.1:4444
+      - URLS_CONSENT=http://127.0.0.1:3001/auth/consent
+      - URLS_LOGIN=http://127.0.0.1:3001/auth/login
+      - URLS_LOGOUT=http://127.0.0.1:3001/auth/logout
+      - DSN=cockroach://root@cockroachd:26257/defaultdb?sslmode=disable&max_conns=20&max_idle_conns=4
+      - SECRETS_SYSTEM=youReallyNeedToChangeThis
+      - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
+      - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
+      - SERVE_COOKIES_SAME_SITE_MODE=Lax
+      - LOG_LEVEL=debug
+      - LOG_LEAK_SENSITIVE_VALUES=true
+      - OAUTH2_EXPOSE_INTERNAL_ERRORS=1
+      # CORS
+      - SERVE_PUBLIC_CORS_ENABLED=true
+      - SERVE_PUBLIC_CORS_DEBUG=true
+      - SERVE_PUBLIC_CORS_ALLOWED_ORIGINS=http://localhost:3002,http://localhost:3001,http://localhost:3000
+      - SERVE_PUBLIC_CORS_ALLOWED_HEADERS=Authorization,Content-Type
+      #- SERVE_PUBLIC_CORS_ALLOWED_METHODS=POST,GET,PUT,DELETE
+      - SERVE_ADMIN_CORS_ENABLED=true
+      - SERVE_ADMIN_CORS_DEBUG=true
+      - SERVE_ADMIN_CORS_ALLOWED_ORIGINS=http://localhost:3002,http://localhost:3001,http://localhost:3000
+      - SERVE_ADMIN_CORS_ALLOWED_HEADERS=Authorization,Content-Type
+
+  cockroachd:
+    image: cockroachdb/cockroach
+    ports:
+      - "26257:26257"
+    command: start --insecure
+
+  # ODYSSEUS SERVER
+  odysseus-server:
+    image: ghcr.io/simoneromano96/odysseus-identity-manager/server
+
+  redis:
+    image: redis:alpine
+    ports: 
+      - 6379:6379
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
+  # consent:
+  #   environment:
+  #     - HYDRA_ADMIN_URL=http://hydra:4445
+  #   image: oryd/hydra-login-consent-node:v1.5.2
+  #   ports:
+  #     - "3000:3000"
+  #   restart: unless-stopped
