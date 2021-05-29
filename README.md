@@ -35,16 +35,16 @@ POST http://localhost:4445/clients
   "client_name": "test1",
   "client_secret": "supersecret",
   "client_secret_expires_at": 0,
-  "client_uri": "http://localhost:3000",
+  "client_uri": "http://localhost:8001",
   "grant_types": [
     "authorization_code",
 		"refresh_token" 
   ],
   "post_logout_redirect_uris": [
-    "http://localhost:3000/logout/callback"
+    "http://localhost:8001/logout/callback"
   ],
   "redirect_uris": [
-    "http://localhost:3000/auth/callback"
+    "http://localhost:8001/auth/callback"
   ],
   "response_types": [
     "code",

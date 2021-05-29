@@ -23,9 +23,9 @@ services:
       - hydra-migrate
     environment:
       - URLS_SELF_ISSUER=http://127.0.0.1:4444
-      - URLS_CONSENT=http://127.0.0.1:3001/auth/consent
-      - URLS_LOGIN=http://127.0.0.1:3001/auth/login
-      - URLS_LOGOUT=http://127.0.0.1:3001/auth/logout
+      - URLS_CONSENT=http://localhost:8000/api/v1/consent
+      - URLS_LOGIN=http://localhost:8000/api/v1/login
+      - URLS_LOGOUT=http://localhost:8000/api/v1/logout
       - DSN=cockroach://root@cockroachd:26257/defaultdb?sslmode=disable&max_conns=20&max_idle_conns=4
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
@@ -37,46 +37,21 @@ services:
       # CORS
       - SERVE_PUBLIC_CORS_ENABLED=true
       - SERVE_PUBLIC_CORS_DEBUG=true
-      - SERVE_PUBLIC_CORS_ALLOWED_ORIGINS=http://localhost:3002,http://localhost:3001,http://localhost:3000
+      - SERVE_PUBLIC_CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000,http://localhost:8001
       - SERVE_PUBLIC_CORS_ALLOWED_HEADERS=Authorization,Content-Type
       #- SERVE_PUBLIC_CORS_ALLOWED_METHODS=POST,GET,PUT,DELETE
       - SERVE_ADMIN_CORS_ENABLED=true
       - SERVE_ADMIN_CORS_DEBUG=true
-      - SERVE_ADMIN_CORS_ALLOWED_ORIGINS=http://localhost:3002,http://localhost:3001,http://localhost:3000
+      - SERVE_ADMIN_CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000,http://localhost:8001
       - SERVE_ADMIN_CORS_ALLOWED_HEADERS=Authorization,Content-Type
 
   cockroachd:
     image: cockroachdb/cockroach
     ports:
       - "26257:26257"
-    command: start --insecure
-
-  # ODYSSEUS SERVER
-  odysseus-server:
-    image: ghcr.io/simoneromano96/odysseus-identity-manager/server
-
-  redis:
-    image: redis:alpine
-    ports: 
-      - 6379:6379
-
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    command: start-single-node --insecure
+    volumes: 
+      - cockroach-data:/cockroach/cockroach-data
 
   # consent:
   #   environment:
@@ -85,3 +60,33 @@ services:
   #   ports:
   #     - "3000:3000"
   #   restart: unless-stopped
+
+  # ODYSSEUS SERVER
+  # odysseus-server:
+  #   image: ghcr.io/simoneromano96/odysseus-identity-manager/server
+
+  # redis:
+  #   image: redis:alpine
+  #   ports: 
+  #     - 6379:6379
+
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - 27017:27017
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
+
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
+volumes:
+  cockroach-data:
