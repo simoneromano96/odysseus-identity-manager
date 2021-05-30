@@ -50,6 +50,9 @@ POST http://localhost:4445/clients
     "code",
 		"id_token"
   ],
-  "scope": "openid offline"
+  "scope": "openid offline",
+  "metadata": {
+    "isTrusted": true
+  }
 }
 ```

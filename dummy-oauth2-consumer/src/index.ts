@@ -8,7 +8,7 @@ import { Issuer, Strategy, TokenSet, UserinfoResponse } from "openid-client"
 const main = async () => {
   const openIdProvider = await Issuer.discover("http://localhost:4444")
   const openIdClient = new openIdProvider.Client({
-    client_id: "node-consumer-service",
+    client_id: "oauth2-client",
     client_secret: "supersecret",
     redirect_uris: ["http://localhost:8001/auth/callback"],
     post_logout_redirect_uris: ["http://localhost:8001/logout/callback"],
