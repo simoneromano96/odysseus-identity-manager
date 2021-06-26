@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "dummy-oauth2-consumer"
+		},
+		{
+			"path": "client"
+		},
+		{
+			"path": "server"
+		}
+	]
+}
