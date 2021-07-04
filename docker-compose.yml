@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  # HYDRA
+  # HYDRA MIGRATIONS
   hydra-migrate:
     image: oryd/hydra
     environment:
@@ -9,13 +9,16 @@ services:
     command:
       migrate sql -e --yes
     restart: on-failure
+    networks: 
+      - hydra-internal
 
+  # HYDRA SERVER
   hydra:
     image: oryd/hydra
     ports:
       - "4444:4444" # Public port
       - "4445:4445" # Admin port (should be protected behind a proxy)
-      # - "5555:5555" # Port for hydra token user
+      - "5555:5555" # Port for hydra token user
     command:
       serve all --dangerous-force-http
     restart: unless-stopped
@@ -44,59 +47,87 @@ services:
       - SERVE_ADMIN_CORS_DEBUG=true
       - SERVE_ADMIN_CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000,http://localhost:8001
       - SERVE_ADMIN_CORS_ALLOWED_HEADERS=Authorization,Content-Type
+    networks: 
+      - hydra-internal
 
+  # COCKROACH DB
   cockroachd:
     image: cockroachdb/cockroach
-    ports:
-      - "26257:26257"
     command: start-single-node --insecure
     volumes: 
       - cockroach-data:/cockroach/cockroach-data
+    networks: 
+      - hydra-internal
 
-  # ODYSSEUS CLIENT
-  odysseus-client:
-    image: ghcr.io/simoneromano96/odysseus-identity-manager/client
+  # ADMINER
+  adminer:
+    image: adminer
     ports:
-      - 3000:80
+      - 8080:8080
+    networks: 
+      - hydra-internal
 
   # ODYSSEUS SERVER
   odysseus-server:
-    image: ghcr.io/simoneromano96/odysseus-identity-manager/server
+    image: ghcr.io/simoneromano96/odysseus-identity-manager/server:0.7.1-beta.4
     environment:
-      APP_SERVER_PORT: 80 
-      APP_SERVER_CLIENTURI: "http://localhost:3000"
-      APP_HYDRA_URI: "http://hydra:4445"
-      APP_MONGO_URI: "mongodb://root:2B3s2Ih1YYxO@mongo"
-      APP_MONGO_DATABASE: "odysseus"
-      APP_REDIS_URI: "redis:6379"
-      APP_SESSION_SECRET: "8DD68ke6VVhesM6OryDShfxhVfAlVVlX"
-    ports:
-      - 8000:80
+      APP_SERVER_PORT: 80
+      APP_SERVER_CLIENTURI: http://localhost:8001
+      APP_HYDRA_URI: http://localhost:4445
+      APP_HYDRA_USERNAME: user
+      APP_HYDRA_PASSWORD: password
+      APP_MONGO_URI: mongodb://root:2B3s2Ih1YYxO@mongo
+      APP_MONGO_DATABASE: odysseus
+      APP_REDIS_URI: redis:6379
+      APP_SESSION_SECRET: secret
+      APP_SMTP_DOMAIN: mail.yourdomain.com
+      APP_SMTP_USERNAME: system@mail.yourdomain.com
+      APP_SMTP_PASSWORD: systempassword
+      APP_SMTP_ADDRESS: system@mail.yourdomain.com
+      APP_SMTP_ALIAS: Odysseus System
+    networks: 
+      - odysseus-internal
 
   redis:
     image: redis:alpine
-    # ports:
-    #   - 6379:6379
+    ports:
+      - 6379:6379
+    networks: 
+      - odysseus-internal
 
   mongo:
     image: mongo
     restart: always
-    # ports:
-    #   - 27017:27017
+    ports:
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 2B3s2Ih1YYxO
+    networks: 
+      - odysseus-internal
     volumes:
       - mongo-data:/data/db
-    
+
   mongo-express:
     image: mongo-express
     restart: always
-    ports:
-      - 8081:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: 2B3s2Ih1YYxO
+    ports:
+      - 8081:8081
+  
+  # ODYSSEUS CLIENT
+  # odysseus-client:
+  #   image: ghcr.io/simoneromano96/odysseus-identity-manager/client:0.5.2
+  #   networks:
+  #     - odysseus-internal
+  #   ports:
+  #     - 8001:80
+
+networks:
+  odysseus-internal:
+  hydra-internal:
 
 volumes:
   cockroach-data:
