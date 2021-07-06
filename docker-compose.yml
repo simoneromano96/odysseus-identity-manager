@@ -47,6 +47,8 @@ services:
       - SERVE_ADMIN_CORS_DEBUG=true
       - SERVE_ADMIN_CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000,http://localhost:8001
       - SERVE_ADMIN_CORS_ALLOWED_HEADERS=Authorization,Content-Type
+      # - WEBFINGER_OIDC_DISCOVERY_SUPPORTED_CLAIMS
+      - WEBFINGER_OIDC_DISCOVERY_SUPPORTED_SCOPE=email,profile,phone,address
     networks: 
       - hydra-internal
 
