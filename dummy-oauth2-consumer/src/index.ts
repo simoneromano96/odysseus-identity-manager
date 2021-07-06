@@ -1,17 +1,19 @@
 import service from "express"
-import expressSesssion from "express-session"
+import expressSession from "express-session"
 import passport from "passport"
 import cors from "cors"
 
 import { Issuer, Strategy, TokenSet, UserinfoResponse } from "openid-client"
 
+const openIDProviderURL = "http://localhost:4444"
+
 const main = async () => {
-  const openIdProvider = await Issuer.discover("http://localhost:4444")
+  const openIdProvider = await Issuer.discover(openIDProviderURL)
   const openIdClient = new openIdProvider.Client({
-    client_id: "oauth2-client",
+    client_id: "node-consumer-service",
     client_secret: "supersecret",
-    redirect_uris: ["http://localhost:8001/auth/callback"],
-    post_logout_redirect_uris: ["http://localhost:8001/logout/callback"],
+    redirect_uris: ["http://localhost:8001/auth/login/callback"],
+    post_logout_redirect_uris: ["http://localhost:8001/auth/logout/callback"],
     token_endpoint_auth_method: "client_secret_basic",
   })
 
@@ -22,7 +24,7 @@ const main = async () => {
 
   // Sessions
   app.use(
-    expressSesssion({
+    expressSession({
       secret: "keyboard cat",
       resave: false,
       saveUninitialized: true,
@@ -42,9 +44,10 @@ const main = async () => {
         console.log(tokenSet)
         console.log(tokenSet.claims())
         console.log(userinfo)
+        const idToken = tokenSet.id_token
         // remove sid from user info, we have no need of that here
         const { sid, ...user } = userinfo
-        return done(null, user)
+        return done(null, {...user, idToken})
       },
     ),
   )
@@ -65,12 +68,29 @@ const main = async () => {
 
   // Start login flow
   app.get("/auth/login", (req, res, next) => {
+    console.log("auth/login")
     passport.authenticate("oidc")(req, res, next)
   })
 
-  // Get callback
-  app.get("/auth/callback", (req, res, next) => {
-    passport.authenticate("oidc", { successRedirect: "/auth/am-i-auth" })(req, res, next)
+  app.get("/auth/login/callback", (req, res, next) => {
+    console.log("auth/login/callback")
+    passport.authenticate("oidc", { successRedirect: "/auth/am-i-auth" }, (...args) => console.log(args))(req, res, next)
+  })
+
+  app.get("/auth/logout", (req, res, next) => {
+    // wow, much safe url, very safe...
+    const logoutUrl = new URL(openIDProviderURL)
+    const searchParams = new URLSearchParams()
+    //@ts-ignore: express merda
+    const idToken = req.user?.idToken;
+    searchParams.set("id_token_hint", idToken)
+    logoutUrl.search = searchParams.toString()
+    res.redirect(logoutUrl.toString())
+  })
+
+  app.get("/auth/logout/callback", (req, res, next) => {
+    req.logout()
+    res.send({ message: "You've been logged out, you're gay now" })
   })
 
   app.get("/auth/am-i-auth", (req, res) => {

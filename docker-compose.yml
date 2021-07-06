@@ -25,10 +25,10 @@ services:
     depends_on:
       - hydra-migrate
     environment:
-      - URLS_SELF_ISSUER=http://127.0.0.1:4444
-      - URLS_CONSENT=http://localhost:8000/api/v1/consent
-      - URLS_LOGIN=http://localhost:8000/api/v1/login
-      - URLS_LOGOUT=http://localhost:8000/api/v1/logout
+      - URLS_SELF_ISSUER=http://localhost:4444
+      - URLS_CONSENT=http://localhost:8000/api/v1/oauth/consent
+      - URLS_LOGIN=http://localhost:8000/api/v1/oauth/login
+      - URLS_LOGOUT=http://localhost:8000/api/v1/oauth/logout
       - DSN=cockroach://root@cockroachd:26257/defaultdb?sslmode=disable&max_conns=20&max_idle_conns=4
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
@@ -102,7 +102,7 @@ services:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 2B3s2Ih1YYxO
+      MONGO_INITDB_ROOT_PASSWORD: example
     networks: 
       - odysseus-internal
     volumes:
@@ -113,9 +113,11 @@ services:
     restart: always
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 2B3s2Ih1YYxO
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
     ports:
       - 8081:8081
+    networks: 
+      - odysseus-internal
   
   # ODYSSEUS CLIENT
   # odysseus-client:
