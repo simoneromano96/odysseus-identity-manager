@@ -31,8 +31,8 @@ Then add the client:
 ```sh
 POST http://localhost:4445/clients
 {
-  "client_id": "oauth2-client",
-  "client_name": "test1",
+  "client_id": "dummy-oauth2-consumer",
+  "client_name": "dummy oauth2 consumer",
   "client_secret": "supersecret",
   "client_secret_expires_at": 0,
   "client_uri": "http://localhost:8001",
@@ -41,10 +41,10 @@ POST http://localhost:4445/clients
 		"refresh_token" 
   ],
   "post_logout_redirect_uris": [
-    "http://localhost:8001/logout/callback"
+    "http://localhost:8001/auth/logout/callback"
   ],
   "redirect_uris": [
-    "http://localhost:8001/auth/callback"
+    "http://localhost:8001/auth/login/callback"
   ],
   "response_types": [
     "code",
