@@ -301,7 +301,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594181884
     created: 1625593651131
-    url: "{{ base_url }}/clients"
+    url: "{{ hydra_base_url }}/clients"
     name: List OAuth 2.0 Clients
     description: ""
     method: GET
@@ -348,7 +348,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594185552
     created: 1625593651127
-    url: "{{ base_url }}/clients"
+    url: "{{ hydra_base_url }}/clients"
     name: Create an OAuth 2.0 Client
     description: ""
     method: POST
@@ -424,7 +424,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594193102
     created: 1625593651123
-    url: "{{ base_url }}/clients/{{ id }}"
+    url: "{{ hydra_base_url }}/clients/{{ id }}"
     name: Get an OAuth 2.0 Client.
     description: ""
     method: GET
@@ -445,7 +445,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594198123
     created: 1625593651119
-    url: "{{ base_url }}/clients/{{ id }}"
+    url: "{{ hydra_base_url }}/clients/{{ id }}"
     name: Update an OAuth 2.0 Client
     description: ""
     method: PUT
@@ -521,7 +521,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594204356
     created: 1625593651116
-    url: "{{ base_url }}/clients/{{ id }}"
+    url: "{{ hydra_base_url }}/clients/{{ id }}"
     name: Deletes an OAuth 2.0 Client
     description: ""
     method: DELETE
@@ -542,7 +542,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594210692
     created: 1625593651112
-    url: "{{ base_url }}/clients/{{ id }}"
+    url: "{{ hydra_base_url }}/clients/{{ id }}"
     name: Patch an OAuth 2.0 Client
     description: ""
     method: PATCH
@@ -575,7 +575,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594227548
     created: 1625593651108
-    url: "{{ base_url }}/health/alive"
+    url: "{{ hydra_base_url }}/health/alive"
     name: Check Alive Status
     description: ""
     method: GET
@@ -596,7 +596,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594256522
     created: 1625593651084
-    url: "{{ base_url }}/keys/{{ set }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}"
     name: Retrieve a JSON Web Key Set
     description: ""
     method: GET
@@ -617,7 +617,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594230810
     created: 1625593650971
-    url: "{{ base_url }}/keys/{{ set }}/{{ kid }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}/{{ kid }}"
     name: Update a JSON Web Key
     description: ""
     method: PUT
@@ -663,7 +663,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594273374
     created: 1625593651046
-    url: "{{ base_url }}/keys/{{ set }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}"
     name: Generate a New JSON Web Key
     description: ""
     method: POST
@@ -693,7 +693,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594274973
     created: 1625593651021
-    url: "{{ base_url }}/keys/{{ set }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}"
     name: Delete a JSON Web Key Set
     description: ""
     method: DELETE
@@ -714,7 +714,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594281815
     created: 1625593650973
-    url: "{{ base_url }}/keys/{{ set }}/{{ kid }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}/{{ kid }}"
     name: Fetch a JSON Web Key
     description: ""
     method: GET
@@ -735,7 +735,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594292067
     created: 1625593651070
-    url: "{{ base_url }}/keys/{{ set }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}"
     name: Update a JSON Web Key Set
     description: ""
     method: PUT
@@ -785,7 +785,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594293366
     created: 1625593650968
-    url: "{{ base_url }}/keys/{{ set }}/{{ kid }}"
+    url: "{{ hydra_base_url }}/keys/{{ set }}/{{ kid }}"
     name: Delete a JSON Web Key
     description: ""
     method: DELETE
@@ -806,7 +806,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594302089
     created: 1625593650966
-    url: "{{ base_url }}/metrics/prometheus"
+    url: "{{ hydra_base_url }}/metrics/prometheus"
     name: Get Snapshot Metrics from the Hydra Service.
     description: ""
     method: GET
@@ -827,7 +827,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594314811
     created: 1625593650959
-    url: "{{ base_url }}/oauth2/auth/requests/consent"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/consent"
     name: Get Consent Request Information
     description: ""
     method: GET
@@ -851,7 +851,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594317614
     created: 1625593650956
-    url: "{{ base_url }}/oauth2/auth/requests/consent/accept"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/consent/accept"
     name: Accept a Consent Request
     description: ""
     method: PUT
@@ -896,7 +896,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594318906
     created: 1625593650954
-    url: "{{ base_url }}/oauth2/auth/requests/consent/reject"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/consent/reject"
     name: Reject a Consent Request
     description: ""
     method: PUT
@@ -931,7 +931,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594402391
     created: 1625593650951
-    url: "{{ base_url }}/oauth2/auth/requests/login"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/login"
     name: Get a Login Request
     description: ""
     method: GET
@@ -956,7 +956,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594408842
     created: 1625593650948
-    url: "{{ base_url }}/oauth2/auth/requests/login/accept"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/login/accept"
     name: Accept a Login Request
     description: ""
     method: PUT
@@ -994,7 +994,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594411898
     created: 1625593650944
-    url: "{{ base_url }}/oauth2/auth/requests/login/reject"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/login/reject"
     name: Reject a Login Request
     description: ""
     method: PUT
@@ -1029,7 +1029,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594414546
     created: 1625593650940
-    url: "{{ base_url }}/oauth2/auth/requests/logout"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/logout"
     name: Get a Logout Request
     description: ""
     method: GET
@@ -1053,7 +1053,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594419303
     created: 1625593650938
-    url: "{{ base_url }}/oauth2/auth/requests/logout/accept"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/logout/accept"
     name: Accept a Logout Request
     description: ""
     method: PUT
@@ -1078,7 +1078,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594420329
     created: 1625593650935
-    url: "{{ base_url }}/oauth2/auth/requests/logout/reject"
+    url: "{{ hydra_base_url }}/oauth2/auth/requests/logout/reject"
     name: Reject a Logout Request
     description: ""
     method: PUT
@@ -1115,7 +1115,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594468478
     created: 1625593650933
-    url: "{{ base_url }}/oauth2/auth/sessions/consent"
+    url: "{{ hydra_base_url }}/oauth2/auth/sessions/consent"
     name: Lists All Consent Sessions of a Subject
     description: ""
     method: GET
@@ -1140,7 +1140,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594478333
     created: 1625593650930
-    url: "{{ base_url }}/oauth2/auth/sessions/consent"
+    url: "{{ hydra_base_url }}/oauth2/auth/sessions/consent"
     name: Revokes Consent Sessions of a Subject for a Specific OAuth 2.0 Client
     description: ""
     method: DELETE
@@ -1170,7 +1170,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594485313
     created: 1625593650927
-    url: "{{ base_url }}/oauth2/auth/sessions/login"
+    url: "{{ hydra_base_url }}/oauth2/auth/sessions/login"
     name: |-
       Invalidates All Login Sessions of a Certain User
       Invalidates a Subject's Authentication Session
@@ -1196,7 +1196,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594490253
     created: 1625593650923
-    url: "{{ base_url }}/oauth2/flush"
+    url: "{{ hydra_base_url }}/oauth2/flush"
     name: Flush Expired OAuth2 Access Tokens
     description: ""
     method: POST
@@ -1224,7 +1224,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594495054
     created: 1625593650921
-    url: "{{ base_url }}/oauth2/introspect"
+    url: "{{ hydra_base_url }}/oauth2/introspect"
     name: Introspect OAuth2 Tokens
     description: ""
     method: POST
@@ -1246,7 +1246,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594499672
     created: 1625593650907
-    url: "{{ base_url }}/oauth2/tokens"
+    url: "{{ hydra_base_url }}/oauth2/tokens"
     name: Delete OAuth2 Access Tokens from a Client
     description: ""
     method: DELETE
@@ -1270,7 +1270,7 @@ resources:
     parentId: fld_a050980e7cd142be8bbcfbe8310d3090
     modified: 1625594502009
     created: 1625593650873
-    url: "{{ base_url }}/version"
+    url: "{{ hydra_base_url }}/version"
     name: Get Service Version
     description: ""
     method: GET
@@ -1291,7 +1291,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594033287
     created: 1625593651186
-    url: "{{ base_url }}/.well-known/jwks.json"
+    url: "{{ hydra_base_url }}/.well-known/jwks.json"
     name: JSON Web Keys Discovery
     description: ""
     method: GET
@@ -1322,7 +1322,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594043491
     created: 1625593651155
-    url: "{{ base_url }}/.well-known/openid-configuration"
+    url: "{{ hydra_base_url }}/.well-known/openid-configuration"
     name: OpenID Connect Discovery
     description: ""
     method: GET
@@ -1343,7 +1343,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594057938
     created: 1625593651103
-    url: "{{ base_url }}/health/ready"
+    url: "{{ hydra_base_url }}/health/ready"
     name: Check Readiness Status
     description: ""
     method: GET
@@ -1364,7 +1364,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594076752
     created: 1625593650963
-    url: "{{ base_url }}/oauth2/auth"
+    url: "{{ hydra_base_url }}/oauth2/auth"
     name: The OAuth 2.0 Authorize Endpoint
     description: ""
     method: GET
@@ -1385,7 +1385,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594098411
     created: 1625593650918
-    url: "{{ base_url }}/oauth2/revoke"
+    url: "{{ hydra_base_url }}/oauth2/revoke"
     name: Revoke OAuth2 Tokens
     description: ""
     method: POST
@@ -1410,7 +1410,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594672944
     created: 1625593650915
-    url: "{{ hydra_base_url }}/oauth2/sessions/logout"
+    url: "{{ hydra_hydra_base_url }}/oauth2/sessions/logout"
     name: OpenID Connect Front-Backchannel Enabled Logout
     description: ""
     method: GET
@@ -1431,7 +1431,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594141654
     created: 1625593650911
-    url: "{{ base_url }}/oauth2/token"
+    url: "{{ hydra_base_url }}/oauth2/token"
     name: The OAuth 2.0 Token Endpoint
     description: ""
     method: POST
@@ -1456,7 +1456,7 @@ resources:
     parentId: fld_9b69200e54ad44aa8772bf8a55e376a0
     modified: 1625594159146
     created: 1625593650903
-    url: "{{ base_url }}/userinfo"
+    url: "{{ hydra_base_url }}/userinfo"
     name: OpenID Connect Userinfo
     description: ""
     method: GET
